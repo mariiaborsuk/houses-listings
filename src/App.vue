@@ -25,7 +25,7 @@ export default {
 body {
   max-width: 100%;
   height: 200%;
-  background-color: #9c9191;
+  background-color: #dddddd;
   color: #4d4d4d;
   font-family: Arial;
 }
