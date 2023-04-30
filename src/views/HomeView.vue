@@ -17,7 +17,7 @@
     <div class="edit"></div>
   </div>
   <div class="content margin">
-    <h2 v-show="showReasult">{{ searchResult }} results found</h2>
+    <h2 v-show="showResult">{{ searchResult }} results found</h2>
     <div class="error" v-show="showError"></div>
     <div v-show="list.length > 0" class="list" v-for="house in list" :key="house.id">
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
@@ -48,7 +48,7 @@ export default {
       textSearch: '',
       searchActive: false,
       searchResult: 0,
-      showReasult: false,
+      showResult: false,
       showError: false
     }
   },
@@ -68,7 +68,7 @@ export default {
 
         this.list = newList
         this.searchActive = true
-        this.showReasult = true
+        this.showResult = true
         this.searchResult = newList.length
         if (this.searchResult === 0) {
           this.showError = true
@@ -82,7 +82,7 @@ export default {
       this.getList()
       this.searchActive = false
       this.textSearch = ''
-      this.showReasult = false
+      this.showResult = false
       this.showError = false
     }
   },
