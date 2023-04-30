@@ -8,7 +8,6 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import Navigation from '@/components/Navigation.vue'
 
-console.log(location.name, 'APp')
 export default {
   name: 'App',
   components: {
@@ -26,7 +25,7 @@ export default {
 body {
   max-width: 100%;
   height: 200%;
-  background-color: #f5f5f5;
+  background-color: #9c9191;
   color: #4d4d4d;
   font-family: Arial;
 }
@@ -39,7 +38,7 @@ body {
   .nav {
     position: fixed;
     left: 0;
-    bottom: 10%;
+    bottom: 0;
     width: 100%;
     background-color: white;
     height: 100px;
