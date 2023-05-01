@@ -30,9 +30,8 @@ body {
   font-family: Arial;
 }
 .content {
-  /* background-color: aqua; */
   height: 100%;
-  margin-top: 50px;
+  margin-top: 7%;
 }
 @media only screen and (max-width: 900px) {
   .nav {
@@ -65,8 +64,8 @@ body {
     flex-basis: 200px;
   }
   .margin {
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 20%;
+    margin-right: 20%;
   }
 }
 </style>

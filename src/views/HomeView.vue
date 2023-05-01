@@ -1,5 +1,11 @@
 <template>
-  <h2 class="margin">Houses</h2>
+  <div class="header margin">
+    <div class="h2"><h2>Houses</h2></div>
+    <div class="createBtn">
+      <button>+ <span class="hidden">CREATE NEW</span></button>
+    </div>
+  </div>
+
   <div class="margin buttons">
     <div class="search">
       <form @submit.prevent="search">
@@ -14,12 +20,46 @@
       ></button>
     </div>
 
-    <div class="edit"></div>
+    <div class="sort">
+      <div
+        style="
+           {
+            'border-bottom-left-radius: 10px;
+            border-top-left-radius: 10px;'
+          }
+        "
+        @click="sortByPrice"
+        :class="sortActive === 'price' ? 'sortActive' : ''"
+        id="sortPrice"
+      >
+        Price
+      </div>
+      <div
+        style="
+           {
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+          }
+        "
+        @click="sortBySize"
+        :class="sortActive === 'size' ? 'sortActive' : ''"
+        id="sortSize"
+      >
+        Size
+      </div>
+    </div>
   </div>
   <div class="content margin">
     <h2 v-show="showResult">{{ searchResult }} results found</h2>
     <div class="error" v-show="showError"></div>
-    <div v-show="list.length > 0" class="list" v-for="house in list" :key="house.id">
+    <router-link
+      v-show="list.length > 0"
+      class="list"
+      v-for="house in list"
+      :key="house.id"
+      :to="{ name: 'house', params: { id: house.id } }"
+      href="#"
+    >
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
 
       <div class="houseInfo">
@@ -32,7 +72,7 @@
           <img src="assets/images/ic_size@3x.png" /> {{ house.size }} m2
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -49,7 +89,8 @@ export default {
       searchActive: false,
       searchResult: 0,
       showResult: false,
-      showError: false
+      showError: false,
+      sortActive: ''
     }
   },
 
@@ -84,10 +125,26 @@ export default {
       this.textSearch = ''
       this.showResult = false
       this.showError = false
+    },
+    sortByPrice() {
+      let sorted = this.list.sort((a, b) => {
+        return a.price - b.price
+      })
+      this.list = sorted
+      this.sortActive = 'price'
+    },
+    sortBySize() {
+      let sorted = this.list.sort((a, b) => {
+        return a.size - b.size
+      })
+      this.list = sorted
+      this.sortActive = 'size'
     }
   },
+
   async created() {
     await this.getList()
+    this.sortByPrice()
   }
 }
 </script>
@@ -95,13 +152,29 @@ export default {
 h2 {
   font-weight: 800;
 }
+.header {
+  display: flex;
+  flex-direction: row;
+}
+.header > div {
+  flex: 1;
+}
+.createBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+.buttons {
+  margin-top: 2%;
+}
 input {
   background-image: url('assets/images/ic_search@3x.png');
   background-color: rgb(192, 181, 181);
   background-repeat: no-repeat;
-  background-size: 30px;
-  background-position: 10px 10px;
-  padding-left: 50px;
+  background-size: 8%;
+  background-position: 5% 50%;
+  padding-left: 9%;
   height: 95%;
 
   border-bottom-left-radius: 10px;
@@ -126,7 +199,6 @@ input:focus {
 form {
   flex: 10;
   height: 100%;
-  padding-right: 10px;
 }
 .search > button {
   flex: 1;
@@ -142,11 +214,27 @@ form {
   display: flex;
   flex-direction: row;
 }
-.edit {
-  flex: 3;
+.sort {
+  width: 30%;
+  border-radius: 10px;
+  background-color: gray;
 }
+.sortActive {
+  background-color: coral;
+}
+#sortPrice.sortActive {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+#sortSize.sortActive {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
 .search {
-  flex: 2;
+  width: 50%;
+  margin-right: 20%;
 }
 .error {
   height: 50vh;
@@ -155,21 +243,48 @@ form {
   background-position: center;
   background-size: 30%;
 }
+.list {
+  text-decoration: none;
+  color: black;
+}
 
 @media only screen and (min-width: 900px) {
+  .createBtn > button {
+    width: 200px;
+    height: 50px;
+    background-color: coral;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    right: 10px;
+  }
   .list {
     height: 15rem;
     background-color: white;
     display: flex;
     flex-direction: row;
     margin-bottom: 2rem;
-    padding: 1rem;
+    padding: 2%;
+    border-radius: 10px;
+  }
+  .sort {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     border-radius: 10px;
   }
 
+  .sort > div {
+    flex: 1;
+    text-align: center;
+    padding-top: 5%;
+    color: white;
+  }
   .houseInfo {
     flex: 2;
-    height: 200px;
+    height: 90%;
     margin: auto;
   }
   .houseImg {
@@ -180,37 +295,64 @@ form {
     background-size: 200%;
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 1rem;
+    margin-right: 1%;
   }
   .street {
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 90%;
   }
   .city {
     color: gray;
-    font-size: 2rem;
+    font-size: 80%;
   }
   .details > img {
-    width: 1.5rem;
+    width: 2%;
   }
   .houseInfo > div {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1%;
   }
 }
 @media only screen and (max-width: 900px) {
+  .sort {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+  }
+  .sort > div {
+    flex: 1;
+    text-align: center;
+    color: white;
+    padding-top: 1%;
+  }
+  .search {
+    width: 100%;
+  }
+  .h2 {
+    flex: 3;
+  }
+  .hidden {
+    display: none;
+  }
+  .createBtn > button {
+    flex: 1;
+    color: black;
+    background-color: #dddddd;
+    border: none;
+  }
   .list {
     height: 10rem;
     background-color: white;
     display: flex;
     flex-direction: row;
-    margin-bottom: 2rem;
-    padding: 1rem;
+    margin-bottom: 5%;
+    padding: 2%;
     border-radius: 10px;
   }
 
   .houseInfo {
     flex: 2;
-    height: 200px;
+    height: 90%;
     margin: auto;
   }
   .houseImg {
@@ -221,18 +363,18 @@ form {
     background-size: 200%;
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 1rem;
+    margin-right: 2%;
   }
   .street {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 100%;
   }
   .city {
     color: gray;
-    font-size: 1.5rem;
+    font-size: 90%;
   }
   .details > img {
-    width: 1.5rem;
+    width: 10%;
   }
   .houseInfo > div {
     margin-bottom: 0.5rem;
@@ -245,8 +387,9 @@ form {
     height: 4rem;
   }
   input {
-    background-size: 10px;
-    padding-left: 30px;
+    background-size: 7%;
+    padding-left: 10%;
+    background-position: 2% 18%;
   }
   .buttons > div {
     flex: 1;
