@@ -57,7 +57,7 @@
       class="list"
       v-for="house in list"
       :key="house.id"
-      :to="{ name: 'house', params: { id: house.id } }"
+      :to="{ name: 'houses', params: { id: house.id } }"
       href="#"
     >
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
@@ -100,9 +100,12 @@ export default {
   methods: {
     ...mapActions(useHousesStore, ['getHouses']),
     search() {
-      if (this.textSearch !== '') {
+      if (this.textSearch.length >= 3) {
         let newList = this.list.filter((item) => {
-          if (item.location.city === this.textSearch) {
+          let endIndex = this.textSearch.length
+          if (
+            item.location.city.slice(0, endIndex).toLowerCase() == this.textSearch.toLowerCase()
+          ) {
             return item
           }
         })
