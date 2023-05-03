@@ -3,10 +3,9 @@
     <Navigation/>
   </div>
 
-  <router-view class="content margin"></router-view>
+  <router-view class="content "></router-view>
 </template>
 <script>
-import {useRoute} from 'vue-router'
 import Navigation from '@/components/Navigation.vue'
 
 export default {
@@ -14,12 +13,6 @@ export default {
   components: {
     Navigation
   },
-  data() {
-    return {
-      location: useRoute(),
-      pageName: location.name
-    }
-  }
 }
 </script>
 <style>
@@ -33,7 +26,7 @@ body {
 
 .content {
   height: 100%;
-  margin-top: 7%;
+
 }
 
 @media only screen and (max-width: 900px) {
@@ -50,9 +43,14 @@ body {
     display: flex;
     flex-direction: row;
   }
+
 }
 
 @media only screen and (min-width: 900px) {
+  .content {
+    margin-top: 4%;
+  }
+
   .nav {
     position: sticky;
     left: 0;

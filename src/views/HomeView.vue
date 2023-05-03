@@ -12,38 +12,38 @@
         <input type="text" placeholder="Search for a house" v-model="textSearch"/>
       </form>
       <button
-          class="clear"
-          :style="{
+        class="clear"
+        :style="{
           backgroundImage: `url(${searchActive ? 'assets/images/ic_clear@3x.png' : ''})`
         }"
-          @click="handleClick"
+        @click="handleClick"
       ></button>
     </div>
 
     <div class="sort">
       <div
-          style="
+        style="
            {
             'border-bottom-left-radius: 10px;
             border-top-left-radius: 10px;'
           }
         "
-          @click="sortByPrice"
-          :class="sortActive === 'price' ? 'sortActive' : ''"
-          id="sortPrice"
+        @click="sortByPrice"
+        :class="sortActive === 'price' ? 'sortActive' : ''"
+        id="sortPrice"
       >
         Price
       </div>
       <div
-          style="
+        style="
            {
             border-bottom-right-radius: 10px;
             border-top-right-radius: 10px;
           }
         "
-          @click="sortBySize"
-          :class="sortActive === 'size' ? 'sortActive' : ''"
-          id="sortSize"
+        @click="sortBySize"
+        :class="sortActive === 'size' ? 'sortActive' : ''"
+        id="sortSize"
       >
         Size
       </div>
@@ -53,17 +53,17 @@
     <h2 v-show="showResult">{{ searchResult }} results found</h2>
     <div class="error" v-show="showError"></div>
     <router-link
-        v-show="list.length > 0"
-        class="list"
-        v-for="house in list"
-        :key="house.id"
-        :to="{ name: 'houses', params: { id: house.id } }"
-        href="#"
+      v-show="list.length > 0"
+      class="list"
+      v-for="house in list"
+      :key="house.id"
+      :to="{ name: 'house', params: { id: house.id } }"
+      href="#"
     >
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
 
       <div class="houseInfo">
-        <div class="street">xxxxxx{{ house.location.street }}</div>
+        <div class="street">{{ house.location.street }}</div>
         <div class="price">€{{ house.price }}</div>
         <div class="city">{{ house.location.city }}</div>
         <div class="details">
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'pinia'
+import {mapActions} from 'pinia'
 import {useHousesStore} from '../stores/counter'
 
 export default {
@@ -93,9 +93,6 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(useHousesStore, ['houses'])
-  },
   methods: {
     ...mapActions(useHousesStore, ['getHouses']),
     search() {
@@ -103,7 +100,7 @@ export default {
         let newList = this.list.filter((item) => {
           let endIndex = this.textSearch.length
           if (
-              item.location.city.slice(0, endIndex).toLowerCase() == this.textSearch.toLowerCase()
+            item.location.city.slice(0, endIndex).toLowerCase() == this.textSearch.toLowerCase()
           ) {
             return item
           }
