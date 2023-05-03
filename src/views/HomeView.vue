@@ -9,7 +9,7 @@
   <div class="margin buttons">
     <div class="search">
       <form @submit.prevent="search">
-        <input type="text" placeholder="Search for a house" v-model="textSearch" />
+        <input type="text" placeholder="Search for a house" v-model="textSearch"/>
       </form>
       <button
         class="clear"
@@ -63,13 +63,13 @@
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
 
       <div class="houseInfo">
-        <div class="street">xxxxxx{{ house.location.street }}</div>
+        <div class="street">{{ house.location.street }}</div>
         <div class="price">€{{ house.price }}</div>
         <div class="city">{{ house.location.city }}</div>
         <div class="details">
-          <img src="assets/images/ic_bed@3x.png" /> {{ house.rooms.bedrooms }}
-          <img src="assets/images/ic_bath@3x.png" /> {{ house.rooms.bathrooms }}
-          <img src="assets/images/ic_size@3x.png" /> {{ house.size }} m2
+          <img src="assets/images/ic_bed@3x.png"/> {{ house.rooms.bedrooms }}
+          <img src="assets/images/ic_bath@3x.png"/> {{ house.rooms.bathrooms }}
+          <img src="assets/images/ic_size@3x.png"/> {{ house.size }} m2
         </div>
       </div>
     </router-link>
@@ -77,9 +77,8 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from 'vue-router'
-import { mapState, mapActions } from 'pinia'
-import { useHousesStore } from '../stores/counter'
+import {mapActions} from 'pinia'
+import {useHousesStore} from '../stores/counter'
 
 export default {
   data() {
@@ -94,15 +93,15 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(useHousesStore, ['houses'])
-  },
   methods: {
     ...mapActions(useHousesStore, ['getHouses']),
     search() {
-      if (this.textSearch !== '') {
+      if (this.textSearch.length >= 3) {
         let newList = this.list.filter((item) => {
-          if (item.location.city === this.textSearch) {
+          let endIndex = this.textSearch.length
+          if (
+            item.location.city.slice(0, endIndex).toLowerCase() == this.textSearch.toLowerCase()
+          ) {
             return item
           }
         })
@@ -152,22 +151,27 @@ export default {
 h2 {
   font-weight: 800;
 }
+
 .header {
   display: flex;
   flex-direction: row;
 }
+
 .header > div {
   flex: 1;
 }
+
 .createBtn {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   padding-top: 20px;
 }
+
 .buttons {
   margin-top: 2%;
 }
+
 input {
   background-image: url('assets/images/ic_search@3x.png');
   background-color: rgb(192, 181, 181);
@@ -181,13 +185,16 @@ input {
   border-top-left-radius: 10px;
   border: none;
 }
+
 input::placeholder {
   font-weight: 700;
   color: grey;
 }
+
 input:focus {
   outline: none;
 }
+
 .search {
   height: 3rem;
   border: none;
@@ -196,10 +203,12 @@ input:focus {
   display: flex;
   flex-direction: row;
 }
+
 form {
   flex: 10;
   height: 100%;
 }
+
 .search > button {
   flex: 1;
   border: none;
@@ -214,14 +223,17 @@ form {
   display: flex;
   flex-direction: row;
 }
+
 .sort {
   width: 30%;
   border-radius: 10px;
   background-color: gray;
 }
+
 .sortActive {
   background-color: coral;
 }
+
 #sortPrice.sortActive {
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
@@ -236,6 +248,7 @@ form {
   width: 50%;
   margin-right: 20%;
 }
+
 .error {
   height: 50vh;
   background-image: url('assets/images/img_empty_houses@3x.png');
@@ -243,6 +256,7 @@ form {
   background-position: center;
   background-size: 30%;
 }
+
 .list {
   text-decoration: none;
   color: black;
@@ -260,6 +274,7 @@ form {
     color: white;
     right: 10px;
   }
+
   .list {
     height: 15rem;
     background-color: white;
@@ -269,6 +284,7 @@ form {
     padding: 2%;
     border-radius: 10px;
   }
+
   .sort {
     display: flex;
     flex-direction: row;
@@ -282,11 +298,13 @@ form {
     padding-top: 5%;
     color: white;
   }
+
   .houseInfo {
     flex: 2;
     height: 90%;
     margin: auto;
   }
+
   .houseImg {
     height: 200px;
     width: 200px;
@@ -297,21 +315,26 @@ form {
     background-position: center;
     margin-right: 1%;
   }
+
   .street {
     font-weight: 700;
     font-size: 90%;
   }
+
   .city {
     color: gray;
     font-size: 80%;
   }
+
   .details > img {
     width: 2%;
   }
+
   .houseInfo > div {
     margin-bottom: 1%;
   }
 }
+
 @media only screen and (max-width: 900px) {
   .sort {
     width: 100%;
@@ -319,27 +342,33 @@ form {
     flex-direction: row;
     margin-top: 2%;
   }
+
   .sort > div {
     flex: 1;
     text-align: center;
     color: white;
     padding-top: 1%;
   }
+
   .search {
     width: 100%;
   }
+
   .h2 {
     flex: 3;
   }
+
   .hidden {
     display: none;
   }
+
   .createBtn > button {
     flex: 1;
     color: black;
     background-color: #dddddd;
     border: none;
   }
+
   .list {
     height: 10rem;
     background-color: white;
@@ -355,6 +384,7 @@ form {
     height: 90%;
     margin: auto;
   }
+
   .houseImg {
     height: 80%;
     width: 35%;
@@ -365,32 +395,40 @@ form {
     background-position: center;
     margin-right: 2%;
   }
+
   .street {
     font-weight: 700;
     font-size: 100%;
   }
+
   .city {
     color: gray;
     font-size: 90%;
   }
+
   .details > img {
     width: 10%;
   }
+
   .houseInfo > div {
     margin-bottom: 0.5rem;
   }
+
   .error {
     background-size: 50%;
   }
+
   .buttons {
     flex-direction: column;
     height: 4rem;
   }
+
   input {
     background-size: 7%;
     padding-left: 10%;
     background-position: 2% 18%;
   }
+
   .buttons > div {
     flex: 1;
   }
