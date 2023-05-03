@@ -27,15 +27,10 @@
   </div>
 </template>
 <script>
-import About from '@/views/AboutView.vue'
-import Home from '@/views/HomeView.vue'
+
 
 export default {
-  name: 'AppNavigation',
-  components: {
-    About,
-    Home
-  }
+  name: 'AppNavigation'
 }
 </script>
 <style>
@@ -62,7 +57,7 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .link > img {
     display: none;
   }

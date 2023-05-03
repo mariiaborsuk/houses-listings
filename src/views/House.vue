@@ -29,27 +29,31 @@
         </div>
 
 
-        <div class="houseIndex"><img class="houseImg2" src="/assets/images/ic_location@3x.png"/> {{
+        <div class="houseIndex"><img class="houseImg2" src="/assets/images/ic_location@3x.png"/> <span>{{
             house.location.zip
-          }}
-          {{ house.location.city }}
-        </div>
-        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_price@3x.png"/> {{ house.price }}
-          <img
-            class="houseImg2"
-            src="/assets/images/ic_size@3x.png"/> {{ house.size }}m2
-          Built in <img class="houseImg2"
-                        src="/assets/images/ic_construction_date@3x.png"/> {{ house.constructionYear }}
+          }} {{ house.location.city }}</span>
 
         </div>
-        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_bed@3x.png"/> {{
+        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_price@3x.png"/> <span>{{
+            house.price
+          }} </span>
+          <img
+            class="houseImg2"
+            src="/assets/images/ic_size@3x.png"/> <span>{{ house.size }}m2</span>
+          <img class="houseImg2"
+               src="/assets/images/ic_construction_date@3x.png"/><span>Built in {{
+              house.constructionYear
+            }}</span>
+
+        </div>
+        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_bed@3x.png"/><span>{{
             house.rooms.bedrooms
-          }} <img class="houseImg2"
-                  src="/assets/images/ic_bath@3x.png"/>
-          {{ house.rooms.bathrooms }} <img class="houseImg2"
-                                           src="/assets/images/ic_garage@3x.png"/> {{
-            house.hasGarage ? 'Yes' : 'No'
-          }}
+          }}</span> <img class="houseImg2"
+                         src="/assets/images/ic_bath@3x.png"/> <span>{{ house.rooms.bathrooms }}</span>
+          <img class="houseImg2"
+               src="/assets/images/ic_garage@3x.png"/> <span>{{
+              house.hasGarage ? 'Yes' : 'No'
+            }}</span>
         </div>
         <div class="houseDescription">
           <div>{{
@@ -98,6 +102,10 @@ export default {
 }
 </script>
 <style>
+span {
+  display: inline-block;
+  margin: 1%
+}
 
 .houseComp {
   background-size: 120%;
@@ -137,8 +145,7 @@ export default {
   }
 
   .houseImg2 {
-    width: 1.5rem;
-    height: 2rem;
+    height: 1rem;
   }
 
   .houseComp {
@@ -156,7 +163,7 @@ export default {
 
   .houseDetails > div {
 
-    margin-top: 3%;
+    margin-top: 1%;
   }
 
   .houseStreet {
@@ -253,8 +260,7 @@ export default {
   }
 
   .houseImg2 {
-    width: 5vw;
-    height: 3vh;
+    height: 1.5vh;
   }
 
 }
