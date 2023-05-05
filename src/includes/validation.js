@@ -13,7 +13,6 @@ export default {
       generateMessage: (ctx) => {
         const messages = {
           required: `The field ${ctx.field} is required.`,
-
         }
 
         const message = messages[ctx.rule.name]

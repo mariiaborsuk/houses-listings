@@ -44,8 +44,6 @@
       </div>
       <div>
         <div>Upload picture (PNG or JPG)*</div>
-
-
         <div class="imageFile" id="imgLabel">
           <div class="label"><label for="image">
             <div class="imageLabel"></div>
@@ -72,7 +70,6 @@
         <Field :rules="validateField" id="price" type="price" name="price" placeholder="eg. €500.000"/>
         <ErrorMessage name="price" class="errorM"/>
       </div>
-
       <div class="double">
         <div>
           <div><label for="size">Size*</label></div>
