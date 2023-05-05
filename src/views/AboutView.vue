@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>About DTT Real Estate</h2>
-    <div class="content">
+    <h2 class="margin">About DTT Real Estate</h2>
+    <div class="content margin">
       <p>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

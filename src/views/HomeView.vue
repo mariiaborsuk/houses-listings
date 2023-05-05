@@ -1,15 +1,15 @@
 <template>
   <div class="header margin">
     <div class="h2"><h2>Houses</h2></div>
-    <div class="createBtn">
+    <router-link :to="{name:'create'}" class="createBtn">
       <button>+ <span class="hidden">CREATE NEW</span></button>
-    </div>
+    </router-link>
   </div>
 
   <div class="margin buttons">
     <div class="search">
       <form @submit.prevent="search">
-        <input type="text" placeholder="Search for a house" v-model="textSearch"/>
+        <input type="text" class="searchInput" placeholder="Search for a house" v-model="textSearch"/>
       </form>
       <button
         class="clear"
@@ -60,10 +60,15 @@
       :to="{ name: 'house', params: { id: house.id } }"
       href="#"
     >
+
       <div class="houseImg" :style="{ backgroundImage: `url(${house.image})` }"></div>
 
       <div class="houseInfo">
         <div class="street">{{ house.location.street }}</div>
+        <div v-show="house.madeByMe" class=" deleteEdit hiddenComp
+          "><img src="/assets/images/ic_edit@3x.png" class="houseImg2"/><img
+          class="houseImg2"
+          src="/assets/images/ic_delete@3x.png"/></div>
         <div class="price">€{{ house.price }}</div>
         <div class="city">{{ house.location.city }}</div>
         <div class="details">
@@ -148,6 +153,7 @@ export default {
 }
 </script>
 <style>
+
 h2 {
   font-weight: 800;
 }
@@ -166,13 +172,14 @@ h2 {
   flex-direction: row;
   justify-content: flex-end;
   padding-top: 20px;
+  text-decoration: none;
 }
 
 .buttons {
   margin-top: 2%;
 }
 
-input {
+.searchInput {
   background-image: url('assets/images/ic_search@3x.png');
   background-color: rgb(192, 181, 181);
   background-repeat: no-repeat;
@@ -186,12 +193,12 @@ input {
   border: none;
 }
 
-input::placeholder {
+.searchInput::placeholder {
   font-weight: 700;
   color: grey;
 }
 
-input:focus {
+.searchInput:focus {
   outline: none;
 }
 
@@ -260,6 +267,7 @@ form {
 .list {
   text-decoration: none;
   color: black;
+  margin-top: 3%;
 }
 
 @media only screen and (min-width: 900px) {
@@ -423,7 +431,7 @@ form {
     height: 4rem;
   }
 
-  input {
+  .searchInput {
     background-size: 7%;
     padding-left: 10%;
     background-position: 2% 18%;

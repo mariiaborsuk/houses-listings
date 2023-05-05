@@ -80,13 +80,15 @@ export default {
   data() {
     return {
       list: [],
-      house: null,
+      house: {},
     }
   },
   methods: {
     ...mapActions(useHousesStore, ['getHouses']),
     async getHouseById() {
       this.list = await this.getHouses();
+      console.log(this.list)
+      console.log(this.$route.params.id)
       this.list.forEach((item) => {
         if (item.id == this.$route.params.id) {
           this.house = item
@@ -121,6 +123,11 @@ span {
 
 .houseDetails {
   padding-top: 5%;
+}
+
+.houseDescription {
+  max-width: 90%;
+  overflow-y: auto;
 }
 
 @media only screen and (min-width: 900px) {
