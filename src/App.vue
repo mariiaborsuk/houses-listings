@@ -36,7 +36,8 @@ body {
     bottom: 0;
     width: 100%;
     background-color: white;
-    height: 100px;
+    height: 10%;
+    margin-top: 5%;
   }
 
   .nav > div {
@@ -47,10 +48,6 @@ body {
 }
 
 @media only screen and (min-width: 900px) {
-  .content {
-    margin-top: 4%;
-  }
-
   .nav {
     position: sticky;
     left: 0;
@@ -58,6 +55,7 @@ body {
     width: 100%;
     background-color: white;
     height: 100px;
+    display: block
   }
 
   .nav > div {

@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import House from '@/views/House.vue'
+import PostHouse from "@/views/PostHouse.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/house/:id',
       name: 'house',
       component: House
+    },
+    {
+      path: '/createHouse',
+      name: 'create',
+      component: PostHouse
     }
   ],
   linkActiveClass: 'active-link',
