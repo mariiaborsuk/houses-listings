@@ -59,17 +59,12 @@
           event.target.style.display='none'
 "
           /></div>
-
-
         </div>
-
         <Field class="inputfile" :rules="validateImage" type="file" id="image" name="image"
                onchange="document.getElementById('imgLabel').style.backgroundImage = `url(${window.URL.createObjectURL(this.files[0])})`;
                document.getElementById('imgLabel').style.backgroundSize='100%';
                document.getElementById('deleteImgBtn').style.display='inline-block'
         "/>
-
-
         <ErrorMessage name="image" class="errorM"/>
       </div>
       <div>

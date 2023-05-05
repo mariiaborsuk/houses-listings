@@ -87,8 +87,6 @@ export default {
     ...mapActions(useHousesStore, ['getHouses']),
     async getHouseById() {
       this.list = await this.getHouses();
-      console.log(this.list)
-      console.log(this.$route.params.id)
       this.list.forEach((item) => {
         if (item.id == this.$route.params.id) {
           this.house = item

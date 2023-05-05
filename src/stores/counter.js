@@ -64,9 +64,6 @@ export const useHousesStore = defineStore('houses', {
           });
 
         }).then((response) => response.text())
-        .then(function (data) {
-          console.log(data)
-        })
     },
 
   }
