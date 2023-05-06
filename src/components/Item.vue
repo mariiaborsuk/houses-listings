@@ -21,12 +21,24 @@
           <img class="imgEdit" src="/assets/images/ic_edit@3x.png"/>
         </router-link>
       </div>
-      <div><img class="imgEdit" src="/assets/images/ic_delete@3x.png"/></div>
+      <div @click="clickDeleteButton"><img class="imgEdit" src="/assets/images/ic_delete@3x.png"/></div>
     </div>
   </div>
 </template>
 <script>
+import {mapWritableState} from "pinia";
+import {useHousesStore} from '../stores/counter'
+
 export default {
+  computed: {
+    ...mapWritableState(useHousesStore, ['showDeleteModal', 'deleteHouseId'])
+  },
+  methods: {
+    clickDeleteButton() {
+      this.showDeleteModal = true
+      this.deleteHouseId = this.house.id
+    }
+  },
   props: ['house']
 }
 </script>
@@ -54,7 +66,7 @@ export default {
 
 .imgEdit {
   display: inline-block;
-  width: 50%;
+  width: 35%;
   margin-right: 10%;
 }
 

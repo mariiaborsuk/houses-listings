@@ -2,16 +2,23 @@ import {defineStore} from 'pinia'
 
 export const useHousesStore = defineStore('houses', {
   state: () => ({
-    linkId: null
+    linkId: null,
+    showDeleteModal: false,
+    deleteHouseId: null,
+    list: []
   }),
 
   actions: {
     async getHouses() {
+      var self = this
       return fetch('https://api.intern.d-tt.nl/api/houses', {
         headers: {'X-Api-Key': import.meta.env.VITE_API_KEY}
       })
         .then((response) => response.json())
-        .then((data) => data)
+        .then((data) => {
+          self.list = data
+          return data
+        })
     },
     async getHouseById(id) {
       const list = await this.getHouses()
@@ -125,7 +132,17 @@ export const useHousesStore = defineStore('houses', {
           });
 
         }).then((response) => response.text())
+    },
+    async deleteHouse(houseId) {
+      return fetch(`https://api.intern.d-tt.nl/api/houses/${houseId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-Api-Key': import.meta.env.VITE_API_KEY
+          }
+        }
+      )
+        .then((response) => response.text())
+        .then((data) => data)
     }
-
   }
 })

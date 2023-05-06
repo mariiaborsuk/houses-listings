@@ -53,9 +53,9 @@
     <h2 v-show="showResult">{{ searchResult }} results found</h2>
     <div class="error" v-show="showError"></div>
 
-    <Item v-show="list.length > 0"
+    <Item v-show="filteredList.length > 0"
           class="list"
-          v-for="house in list"
+          v-for="house in filteredList"
           :key="house.id"
           :house="house"
     />
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import {mapActions} from 'pinia'
+import {mapActions, mapState} from 'pinia'
 import {useHousesStore} from '../stores/counter'
 import Item from '@/components/Item.vue'
 
@@ -75,7 +75,7 @@ export default {
   },
   data() {
     return {
-      list: [],
+      filteredList: [],
       textSearch: '',
       searchActive: false,
       searchResult: 0,
@@ -84,12 +84,14 @@ export default {
       sortActive: ''
     }
   },
-
+  computed: {
+    ...mapState(useHousesStore, ['list'])
+  },
   methods: {
     ...mapActions(useHousesStore, ['getHouses']),
     search() {
       if (this.textSearch.length >= 3) {
-        let newList = this.list.filter((item) => {
+        this.filteredList = this.list.filter((item) => {
           let endIndex = this.textSearch.length
           if (
             item.location.city.slice(0, endIndex).toLowerCase() == this.textSearch.toLowerCase()
@@ -97,21 +99,21 @@ export default {
             return item
           }
         })
-
-        this.list = newList
         this.searchActive = true
         this.showResult = true
-        this.searchResult = newList.length
+        this.searchResult = this.filteredList.length
         if (this.searchResult === 0) {
           this.showError = true
         }
+      } else {
+        this.filteredList = this.list
       }
     },
-    async getList() {
-      this.list = await this.getHouses()
-    },
     handleClick() {
-      this.getList()
+      var self = this
+      this.getHouses().then((data) => {
+        self.filteredList = data
+      })
       this.searchActive = false
       this.textSearch = ''
       this.showResult = false
@@ -134,8 +136,15 @@ export default {
   },
 
   async created() {
-    await this.getList()
-    this.sortByPrice()
+    var self = this
+    this.getHouses().then((data) => {
+      self.filteredList = data
+      self.sortByPrice()
+    })
+    const useStore = useHousesStore()
+    useStore.$subscribe((mutation, state) => {
+      self.search()
+    })
   }
 }
 </script>
@@ -285,7 +294,8 @@ form {
   }
 
   .details > img {
-    width: 2%;
+    width: 4%;
+    margin-left: 0px;
   }
 
   .houseInfo > div {

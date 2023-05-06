@@ -45,7 +45,7 @@
       </div>
       <div>
         <div>Upload picture (PNG or JPG)*</div>
-        <div class="imageFile" id="imgLabel" :style="{
+        <div class="imageFileEdit" id="imgLabel" :style="{
           backgroundImage: `url(${imageURl})`
         }">
           <div class="label"><label for="image">
@@ -55,10 +55,7 @@
           <div class="btn"><img
             id="deleteImgBtn"
             src="/assets/images/ic_clear_white@3x.png"
-            onclick="document.getElementById('imgLabel').style.backgroundImage = 'url(assets/images/ic_plus_grey@3x.png)';
-          document.getElementById('imgLabel').style.backgroundSize='20%'
-          event.target.style.display='none'
-"
+            @click="onImageDelete"
           /></div>
         </div>
         <Field class="inputfile" :rules="validateImage" type="file" id="image" name="image"/>
@@ -144,7 +141,7 @@ export default {
       houseNumber: '',
       houseAddition: '',
       imageURl: '',
-      background: 'assets/images/ic_plus_grey@3x.png'
+      background: 'assets/images/ic_plus_grey@3x.png',
     }
   },
 
@@ -181,10 +178,18 @@ export default {
       this.isSubmited = true
     },
     onFileChange(event) {
-      console.log(event)
-      document.getElementById('imgLabel').style.backgroundImage = `url(${window.URL.createObjectURL(event.target.files[0])})`;
-      document.getElementById('imgLabel').style.backgroundSize = '100%';
-      document.getElementById('deleteImgBtn').style.display = 'inline-block'
+      if (!event.target.files) {
+        document.getElementById('imgLabel').style.backgroundImage = 'url(/assets/images/ic_plus_grey@3x.png)';
+      } else {
+        document.getElementById('imgLabel').style.backgroundImage = `url(${window.URL.createObjectURL(event.target.files[0])})`;
+        document.getElementById('imgLabel').style.backgroundSize = '100%';
+        document.getElementById('deleteImgBtn').style.display = 'inline-block'
+      }
+    },
+    onImageDelete(event) {
+      document.getElementById('imgLabel').style.backgroundImage = 'url(/assets/images/ic_plus_grey@3x.png)';
+      event.target.style.display = 'none'
+      this.house.image = null;
     },
     splitAddress(address) {
       if (address.length === 0) {
@@ -207,6 +212,27 @@ export default {
       }
 
       return result
+    },
+    validateField(value) {
+      if (!value) {
+        return 'This field is required';
+      }
+      return true
+
+    },
+    validateImage(value) {
+      if (!value && this.house.image) {
+        return true;
+      }
+
+      let allowedTypes = ['image/jpeg', 'image/png'];
+      if (!value) {
+        return 'image is required';
+      } else if (!allowedTypes.includes(value.type)) {
+        return 'Only JPG and PNG are allowed'
+      }
+
+      return true
     }
   },
   async created() {
@@ -273,22 +299,22 @@ h3 {
   margin-top: 1%
 }
 
-.imageFile {
+.imageFileEdit {
   border: 2px dashed gray;
   background-image: url("/assets/images/ic_plus_grey@3x.png");
   background-repeat: no-repeat;
-  background-size: 20%;
   background-position: center;
+  background-size: 100%;
   display: flex;
   flex-direction: row
 
 }
 
-.imageFile > .label {
+.imageFileEdit > .label {
   flex: 3
 }
 
-.imageFile > .btn {
+.imageFileEdit > .btn {
   flex: 1
 }
 
@@ -356,7 +382,7 @@ h3 {
     margin-left: 4vw;
   }
 
-  .imageFile {
+  .imageFileEdit {
     width: 10vw;
     height: 20vh;
 
@@ -382,7 +408,7 @@ h3 {
 }
 
 @media only screen and (max-width: 900px) {
-  .imageFile {
+  .imageFileEdit {
     width: 10vw;
     height: 5vh;
 
