@@ -84,7 +84,6 @@ export default {
   },
   async created() {
     this.house = await this.getHouseById(this.$route.params.id)
-    console.log(this.house)
   },
   methods: {
     ...mapActions(useHousesStore, ['getHouses', 'getHouseById']),
