@@ -8,60 +8,59 @@
       <div class="houseComp" :style="{
           backgroundImage: `url(${house.image})`
         }">
-        <div class="houseNav hiddenDiv">
+        <div class="houseNav">
           <div>
             <router-link :to="{name: 'houses'}"><img class="houseImg2 " src="/assets/images/ic_back_white@3x.png"/>
             </router-link>
           </div>
-          <div v-show="house.madeByMe" class="navImg"><img class="houseImg2 editImg"
-                                                           src="/assets/images/ic_edit_white@3x.png"/>
+          <div v-show="house.madeByMe" class="navImg hiddenDiv">
+            <router-link :to="{name:'edit', params: {id: $route.params.id}}">
+              <img class="houseImg2 editImg" src="/assets/images/ic_edit_white@3x.png"/>
+            </router-link>
             <img class="houseImg2 deleteImg" src="/assets/images/ic_delete_white@3x.png"/></div>
         </div>
 
       </div>
       <div class="houseDetails">
         <div class="streetDetails">
-          <div class="houseStreet">{{ house.location.street }}</div>
-          <div v-show="house.madeByMe" class=" deleteEdit hiddenComp
-          "><img src="/assets/images/ic_edit@3x.png" class="houseImg2"/><img
-            class="houseImg2"
-            src="/assets/images/ic_delete@3x.png"/></div>
+          <div v-if="house.location" class="houseStreet">{{ house.location.street }}</div>
+          <div v-show="house.madeByMe" class="deleteEdit hiddenComp">
+            <router-link :to="{name:'edit', params: {id: $route.params.id}}">
+              <img src="/assets/images/ic_edit@3x.png" class="houseImg2"/></router-link>
+
+            <img
+              class="houseImg2"
+              src="/assets/images/ic_delete@3x.png"/></div>
         </div>
 
 
-        <div class="houseIndex"><img class="houseImg2" src="/assets/images/ic_location@3x.png"/> <span>{{
-            house.location.zip
-          }} {{ house.location.city }}</span>
-
+        <div class="houseIndex"><img class="houseImg2" src="/assets/images/ic_location@3x.png"/>
+          <span v-if="house.location">{{ house.location.zip }} {{ house.location.city }}</span>
         </div>
-        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_price@3x.png"/> <span>{{
-            house.price
-          }} </span>
+        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_price@3x.png"/>
+          <span v-if="house">{{
+              house.price
+            }}
+          </span>
           <img
             class="houseImg2"
-            src="/assets/images/ic_size@3x.png"/> <span>{{ house.size }}m2</span>
+            src="/assets/images/ic_size@3x.png"/>
+          <span v-if="house">{{ house.size }}m2</span>
           <img class="houseImg2"
-               src="/assets/images/ic_construction_date@3x.png"/><span>Built in {{
-              house.constructionYear
-            }}</span>
+               src="/assets/images/ic_construction_date@3x.png"/>
+          <span v-if="house">Built in {{ house.constructionYear }}</span>
 
         </div>
-        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_bed@3x.png"/><span>{{
-            house.rooms.bedrooms
-          }}</span> <img class="houseImg2"
-                         src="/assets/images/ic_bath@3x.png"/> <span>{{ house.rooms.bathrooms }}</span>
-          <img class="houseImg2"
-               src="/assets/images/ic_garage@3x.png"/> <span>{{
-              house.hasGarage ? 'Yes' : 'No'
-            }}</span>
+        <div class="houseInformation"><img class="houseImg2" src="/assets/images/ic_bed@3x.png"/>
+          <span v-if="house.rooms">{{ house.rooms.bedrooms }}</span>
+          <img class="houseImg2" src="/assets/images/ic_bath@3x.png"/>
+          <span v-if="house.rooms">{{ house.rooms.bathrooms }}</span>
+          <img class="houseImg2" src="/assets/images/ic_garage@3x.png"/>
+          <span v-if="house">{{ house.hasGarage ? 'Yes' : 'No' }}</span>
         </div>
         <div class="houseDescription">
-          <div>{{
-              house.description
-            }}
-          </div>
+          <div v-if="house">{{ house.description }}</div>
         </div>
-
       </div>
     </div>
 
@@ -83,22 +82,13 @@ export default {
       house: {},
     }
   },
-  methods: {
-    ...mapActions(useHousesStore, ['getHouses']),
-    async getHouseById() {
-      this.list = await this.getHouses();
-      this.list.forEach((item) => {
-        if (item.id == this.$route.params.id) {
-          this.house = item
-        }
-      })
-
-    }
-
+  async created() {
+    this.house = await this.getHouseById(this.$route.params.id)
+    console.log(this.house)
   },
-  created() {
-    this.getHouseById()
-  }
+  methods: {
+    ...mapActions(useHousesStore, ['getHouses', 'getHouseById']),
+  },
 }
 </script>
 <style>

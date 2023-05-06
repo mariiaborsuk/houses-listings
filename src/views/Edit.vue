@@ -5,12 +5,13 @@
       <span class="hiddenPost">Back to overview</span>
     </router-link>
     <h3>
-      Create new listing
+      Edit listing
     </h3>
     <Form class="postForm" @submit="submit">
       <div>
         <div><label for="street">Street name*</label></div>
-        <Field :rules="validateField" id="street" class="doubleForm" name="street" placeholder="Enter the street name"
+        <Field v-model="street.streetName" :rules="validateField" id="street" class="doubleForm" name="streetName"
+               placeholder="Enter the street name"
                type="text"/>
         <ErrorMessage name="street" class="errorM"/>
       </div>
@@ -19,30 +20,34 @@
         <div><label for="houseNumber">House number</label></div>
         <div class="double">
           <div>
-            <Field :rules="validateField" id="houseNumber" name="houseNumber" placeholder="Enter the house number"
+            <Field v-model="street.houseNumber" :rules="validateField" id="houseNumber" name="houseNumber"
+                   placeholder="Enter the house number"
                    type="text"
                    class="input"/>
             <ErrorMessage name="houseNumber" class="errorM"/>
           </div>
 
           <div>
-            <Field class="input right" id="option" name="option" type="text" placeholder="eg. A"/>
+            <Field v-model="street.numberAddition" class="input right" id="option" name="numberAddition" type="text"
+                   placeholder="eg. A"/>
           </div>
         </div>
       </div>
       <div>
         <div><label for="code">Postal code*</label></div>
-        <Field :rules="validateField" id="code" type="text" name="code" placeholder="eg. 1000AA"/>
+        <Field v-model="code" :rules="validateField" id="code" type="text" name="code" placeholder="eg. 1000AA"/>
         <ErrorMessage name="code" class="errorM"/>
       </div>
       <div>
         <div><label for="city">City*</label></div>
-        <Field :rules="validateField" id="city" type="text" name="city" placeholder="eg. Utrecht"/>
+        <Field v-model="city" :rules="validateField" id="city" type="text" name="city" placeholder="eg. Utrecht"/>
         <ErrorMessage name="city" class="errorM"/>
       </div>
       <div>
         <div>Upload picture (PNG or JPG)*</div>
-        <div class="imageFile" id="imgLabel">
+        <div class="imageFile" id="imgLabel" :style="{
+          backgroundImage: `url(${imageURl})`
+        }">
           <div class="label"><label for="image">
             <div class="imageLabel"></div>
 
@@ -56,27 +61,24 @@
 "
           /></div>
         </div>
-        <Field class="inputfile" :rules="validateImage" type="file" id="image" name="image"
-               onchange="document.getElementById('imgLabel').style.backgroundImage = `url(${window.URL.createObjectURL(this.files[0])})`;
-               document.getElementById('imgLabel').style.backgroundSize='100%';
-               document.getElementById('deleteImgBtn').style.display='inline-block'
-        "/>
+        <Field class="inputfile" :rules="validateImage" type="file" id="image" name="image"/>
         <ErrorMessage name="image" class="errorM"/>
       </div>
       <div>
         <div><label for="price">Price*</label></div>
-        <Field :rules="validateField" id="price" type="price" name="price" placeholder="eg. €500.000"/>
+        <Field v-model="price" :rules="validateField" id="price" type="price" name="price" placeholder="eg. €500.000"/>
         <ErrorMessage name="price" class="errorM"/>
       </div>
       <div class="double">
         <div>
           <div><label for="size">Size*</label></div>
-          <Field :rules="validateField" id="size" class="input" type="text" name="size" placeholder="eg. 60m2"/>
+          <Field v-model="size" :rules="validateField" id="size" class="input" type="text" name="size"
+                 placeholder="eg. 60m2"/>
           <ErrorMessage name="size" class="errorM"/>
         </div>
         <div>
           <div><label for="garage" class="right">Garage*</label></div>
-          <Field :rules="validateField" as="select" class="input right" name="garage" id="garage">
+          <Field v-model="hasGarage" :rules="validateField" as="select" class="input right" name="garage" id="garage">
             <option disabled selected hidden style="{color:gray}" value="">Select</option>
             <option value="yes">yes</option>
             <option value="no">No</option>
@@ -87,30 +89,32 @@
       <div class="double">
         <div>
           <div><label for="bedrooms">Bedrooms*</label></div>
-          <Field :rules="validateField" class="input" id="bedrooms" name="bedrooms" type="text"
+          <Field v-model="bedrooms" :rules="validateField" class="input" id="bedrooms" name="bedrooms" type="text"
                  placeholder="Enter amount"/>
           <ErrorMessage name="bedrooms" class="errorM"/>
         </div>
         <div>
           <div><label for="bathrooms" class="right">Bathrooms*</label></div>
-          <Field :rules="validateField" id="bathrooms" class="input right" name="bathrooms" type="text"
+          <Field v-model="bathrooms" :rules="validateField" id="bathrooms" class="input right" name="bathrooms"
+                 type="text"
                  placeholder="Enter amount"/>
           <ErrorMessage name="bathrooms" class="errorM"/>
         </div>
       </div>
       <div>
         <div><label for="date">Construction date*</label></div>
-        <Field :rules="validateField" id="date" type="text" name="date" placeholder="eg. 1990"/>
+        <Field v-model="constructionYear" :rules="validateField" id="date" type="text" name="constructionYear"
+               placeholder="eg. 1990"/>
         <ErrorMessage name="date" class="errorM"/>
       </div>
       <div>
         <div><label for="description">Description*</label></div>
-        <Field :rules="validateField" type="text" class="description" name="description"
+        <Field v-model="description" :rules="validateField" type="text" class="description" name="description"
                placeholder="Enter description"/>
         <ErrorMessage name="description" class="errorM"/>
       </div>
       <div>
-        <button :disabled="isSubmited" @submit="submit" type="submit" class="post">POST</button>
+        <button :disabled="isSubmited" @submit="submit" type="submit" class="post">Save</button>
       </div>
     </Form>
   </div>
@@ -118,13 +122,29 @@
 <script>
 import {Field, Form} from 'vee-validate'
 import {mapActions, mapState,} from 'pinia'
-import {useHousesStore} from '../stores/counter'
+import {useHousesStore} from '@/stores/counter'
 
 export default {
   name: 'PostHouse',
   data() {
     return {
       isSubmited: false,
+      house: {},
+      editId: '',
+      street: '',
+      city: '',
+      price: '',
+      size: '',
+      bedrooms: '',
+      bathrooms: '',
+      code: '',
+      description: '',
+      hasGarage: '',
+      constructionYear: '',
+      houseNumber: '',
+      houseAddition: '',
+      imageURl: '',
+      background: 'assets/images/ic_plus_grey@3x.png'
     }
   },
 
@@ -137,45 +157,85 @@ export default {
     ...mapState(useHousesStore, ['linkId']),
   },
   methods: {
-    ...mapActions(useHousesStore, ['postHouse']),
+    ...mapActions(useHousesStore, ['editHouse', 'getHouses']),
     submit(values) {
       var self = this
-      this.postHouse(
+      console.log(values)
+      this.editHouse(
+        this.editId,
         values.price,
         values.bedrooms,
         values.bathrooms,
         values.size,
-        values.street,
+        values.streetName,
         values.houseNumber,
         values.code,
         values.city,
-        values.option,
-        values.date,
-        values.garage,
+        values.numberAddition,
+        values.constructionYear,
+        values.garage === 'yes',
         values.description
       ).then(function (imageData) {
-        self.$router.push({name: "house", params: {id: self.linkId}});
+        self.$router.push({name: "house", params: {id: self.linkId}})
       });
+      this.isSubmited = true
     },
-    validateField(value) {
-      if (!value) {
-        return 'This field is required';
-      }
-      return true
-
+    onFileChange(event) {
+      console.log(event)
+      document.getElementById('imgLabel').style.backgroundImage = `url(${window.URL.createObjectURL(event.target.files[0])})`;
+      document.getElementById('imgLabel').style.backgroundSize = '100%';
+      document.getElementById('deleteImgBtn').style.display = 'inline-block'
     },
-    validateImage(value) {
-      let allowedTypes = ['image/jpeg', 'image/png'];
-      if (!value) {
-        return 'image is required';
-      } else if (!allowedTypes.includes(value.type)) {
-        return 'Only JPG and PNG are allowed'
+    splitAddress(address) {
+      if (address.length === 0) {
+        return [];
       }
 
-      return true
+      const splitted = address.split(' ')
+      if (splitted.length === 1) {
+        return splitted
+      }
+
+      const result = {streetName: splitted[0], houseNumber: '', numberAddition: ''}
+
+      for (let i = 0; i < splitted[1].length; i++) {
+        if (isNaN(parseInt(splitted[1][i]))) {
+          result.numberAddition = result.numberAddition + splitted[1][i]
+        } else {
+          result.houseNumber = result.houseNumber + splitted[1][i]
+        }
+      }
+
+      return result
     }
-  }
+  },
+  async created() {
+    this.editId = this.$route.params.id;
+    let list = await this.getHouses();
+    list.forEach((item) => {
+      if (item.id == this.editId) {
+        this.house = item
+      }
+    })
 
+    this.street = this.splitAddress(this.house.location.street);
+    this.city = this.house.location.city;
+    this.price = this.house.price;
+    this.size = this.house.size;
+    this.bedrooms = this.house.rooms.bedrooms;
+    this.bathrooms = this.house.rooms.bathrooms;
+    this.code = this.house.location.zip;
+    this.description = this.house.description;
+    this.hasGarage = this.house.hasGarage ? 'yes' : 'no';
+    this.constructionYear = this.house.constructionYear;
+    this.houseNumber = this.house.houseNumber;
+    this.houseAddition = this.house.numberAddition;
+    this.imageURl = this.house.image
+    this.background = this.house.image
+  },
+  async mounted() {
+    this.$el.addEventListener('change', this.onFileChange)
+  }
 }
 </script>
 <style>
