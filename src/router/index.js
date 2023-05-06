@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import House from '@/views/House.vue'
 import PostHouse from "@/views/PostHouse.vue";
+import Edit from '@/views/Edit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,12 +21,17 @@ const router = createRouter({
     {
       path: '/house/:id',
       name: 'house',
-      component: House
+      component: House,
     },
     {
       path: '/createHouse',
       name: 'create',
       component: PostHouse
+    },
+    {
+      path: '/editHouse/:id',
+      name: 'edit',
+      component: Edit
     }
   ],
   linkActiveClass: 'active-link',
