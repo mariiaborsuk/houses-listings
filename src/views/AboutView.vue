@@ -15,7 +15,7 @@
       </p>
       <h2 style="padding-top: 2rem">Design and Development</h2>
       <div class="logoDiv">
-        <div class="picture"><img class="img" src="assets/images/img_logo_dtt@3x.png"/></div>
+        <div class="picture"><img class="img" src="/assets/images/img_logo_dtt@3x.png"/></div>
         <div style="padding-left: 1rem">
           <div>By DTT</div>
           <div style="color: blue">www.d-tt.nl</div>

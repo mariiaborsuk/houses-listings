@@ -10,9 +10,9 @@
       <div class="price">€{{ house.price }}</div>
       <div class="city">{{ house.location.city }}</div>
       <div class="details">
-        <img class="img" src="assets/images/ic_bed@3x.png"/> {{ house.rooms.bedrooms }}
-        <img class="img" src="assets/images/ic_bath@3x.png"/> {{ house.rooms.bathrooms }}
-        <img class="img" src="assets/images/ic_size@3x.png"/> {{ house.size }} m2
+        <img class="img" src="/assets/images/ic_bed@3x.png"/> {{ house.rooms.bedrooms }}
+        <img class="img" src="/assets/images/ic_bath@3x.png"/> {{ house.rooms.bathrooms }}
+        <img class="img" src="/assets/images/ic_size@3x.png"/> {{ house.size }} m2
       </div>
     </div>
     <div v-show="house.madeByMe" class="deleteEdit">
