@@ -146,7 +146,7 @@ span {
 
   .houseDetails {
     background-color: white;
-    dispaly: flex;
+    display: flex;
     flex-direction: column;
     padding-bottom: 3%;
   }
