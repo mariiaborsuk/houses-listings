@@ -2,26 +2,36 @@
   <div class="nav">
     <Navigation/>
   </div>
-
+  <modal/>
   <router-view class="content "></router-view>
 </template>
 <script>
 import Navigation from '@/components/Navigation.vue'
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: 'App',
   components: {
-    Navigation
+    Navigation,
+    Modal
   },
 }
 </script>
 <style>
+.title {
+  font-family: Open Sans Semibold;
+}
+
+.title2 {
+  font-family: Montserrat Medium Italic
+}
+
 body {
   max-width: 100%;
   height: 200%;
   background-color: #dddddd;
   color: #4d4d4d;
-  font-family: Arial;
+  font-family: Open Sans Regular;
 }
 
 .content {
@@ -43,6 +53,12 @@ body {
   .nav > div {
     display: flex;
     flex-direction: row;
+  }
+
+  .margin {
+    max-width: 90%;
+    margin-right: 5%;
+    margin-left: 5%
   }
 
 }
@@ -68,6 +84,7 @@ body {
   .margin {
     margin-left: 20%;
     margin-right: 20%;
+    max-width: 60%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="houseView ">
+  <div class="houseView margin ">
     <div class="house">
       <div class="hiddenComp">
         <router-link :to="{name: 'houses'}"><img class="houseImg2" src="/assets/images/ic_back_grey@3x.png"/>
@@ -9,7 +9,7 @@
           backgroundImage: `url(${house.image})`
         }">
         <div class="houseNav">
-          <div>
+          <div class="hiddenMobile">
             <router-link :to="{name: 'houses'}"><img class="houseImg2 " src="/assets/images/ic_back_white@3x.png"/>
             </router-link>
           </div>
@@ -30,7 +30,7 @@
 
             <img
               class="houseImg2"
-              src="/assets/images/ic_delete@3x.png"/></div>
+              src="/assets/images/ic_delete@3x.png" @click="openDeleteModal"/></div>
         </div>
 
 
@@ -63,15 +63,11 @@
         </div>
       </div>
     </div>
-
-    <div class="recommended"><h2>Recommended for you</h2>
-      <div class="list">List</div>
-    </div>
   </div>
 
 </template>
 <script>
-import {mapActions} from 'pinia'
+import {mapActions, mapWritableState} from 'pinia'
 import {useHousesStore} from '../stores/counter'
 
 export default {
@@ -85,8 +81,15 @@ export default {
   async created() {
     this.house = await this.getHouseById(this.$route.params.id)
   },
+  computed: {
+    ...mapWritableState(useHousesStore, ['showDeleteModal', 'deleteHouseId'])
+  },
   methods: {
     ...mapActions(useHousesStore, ['getHouses', 'getHouseById']),
+    openDeleteModal() {
+      this.showDeleteModal = true
+      this.deleteHouseId = this.house.id
+    }
   },
 }
 </script>
@@ -112,14 +115,13 @@ span {
   padding-top: 5%;
 }
 
-.houseDescription {
-  max-width: 90%;
-  overflow-y: auto;
-}
-
 @media only screen and (min-width: 900px) {
+  .hiddenMobile {
+    display: none
+  }
+
   .houseView {
-    max-width: 90%;
+    max-width: 60%;
     margin: auto;
     display: flex;
     flex-direction: row;
@@ -127,11 +129,6 @@ span {
 
   .house {
     flex: 2
-  }
-
-  .recommended {
-    flex: 1;
-    margin-left: 3%
   }
 
   .hiddenDiv {
@@ -152,11 +149,9 @@ span {
     dispaly: flex;
     flex-direction: column;
     padding-bottom: 3%;
-
   }
 
   .houseDetails > div {
-
     margin-top: 1%;
   }
 
@@ -183,13 +178,11 @@ span {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-
   }
 
   .deleteEdit > img {
     margin-left: 5%;
   }
-
 }
 
 @media only screen and (max-width: 900px) {
@@ -208,11 +201,12 @@ span {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    margin-left: 60%;
+    margin-left: 90%;
   }
 
-  .navImg > img {
-    margin-left: 20%
+  .navImg img {
+    margin-right: 5vw;
+    height: 3vh;
   }
 
   .house {
@@ -228,6 +222,10 @@ span {
 
   .hiddenComp {
     display: none;
+  }
+
+  .houseNav {
+    margin-right: 14vw;
   }
 
   .houseDetails {
