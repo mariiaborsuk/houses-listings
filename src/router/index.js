@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import HomeView from '@/views/HomeView/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
-import House from '@/views/House.vue'
-import PostHouse from "@/views/PostHouse.vue";
-import Edit from '@/views/Edit.vue'
+import House from '@/views/House/House.vue'
+import PostHouse from "@/views/PostHouse/PostHouse.vue";
+import Edit from '@/views/Edit/Edit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,7 +19,7 @@ const router = createRouter({
       component: AboutView
     },
     {
-      path: '/house/:id',
+      path: '/House/:id',
       name: 'house',
       component: House,
     },
@@ -30,7 +30,7 @@ const router = createRouter({
     },
     {
       path: '/editHouse/:id',
-      name: 'edit',
+      name: 'Edit',
       component: Edit
     }
   ],

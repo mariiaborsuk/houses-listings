@@ -1,0 +1,162 @@
+span {
+  display: inline-block;
+  margin: 1%
+}
+
+.houseComp {
+  background-size: 120%;
+
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
+.houseDetails > div {
+  margin-left: 5%;
+  margin-right: 5%
+}
+
+.houseDetails {
+  padding-top: 5%;
+}
+
+@media only screen and (min-width: 900px) {
+  .hiddenMobile {
+    display: none
+  }
+
+  .houseView {
+    max-width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .house {
+    flex: 2
+  }
+
+  .hiddenDiv {
+    display: none
+  }
+
+  .houseImg2 {
+    height: 1rem;
+  }
+
+  .houseComp {
+    height: 60vh;
+    background-position: 10% 20%;
+  }
+
+  .houseDetails {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 3%;
+  }
+
+  .houseDetails > div {
+    margin-top: 1%;
+  }
+
+  .houseStreet {
+    font-weight: bold;
+    font-size: 180%;
+  }
+
+  .hiddenComp {
+    margin-top: 2%;
+    margin-bottom: 2%
+  }
+
+  .streetDetails {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .streetDetails > div {
+    flex: 1
+  }
+
+  .deleteEdit {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .deleteEdit > img {
+    margin-left: 5%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .houseNav {
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+    max-width: 100%;
+  }
+
+  .houseNav > div {
+    flex: 1
+  }
+
+  .navImg {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-left: 90%;
+  }
+
+  .navImg img {
+    margin-right: 5vw;
+    height: 3vh;
+  }
+
+  .house {
+    display: flex;
+    flex-direction: column;
+    position: relative
+  }
+
+  .house > .houseComp {
+    height: 40vh;
+    max-width: 100%;
+  }
+
+  .hiddenComp {
+    display: none;
+  }
+
+  .houseNav {
+    margin-right: 14vw;
+  }
+
+  .houseDetails {
+    background-color: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    top: 28vh;
+    padding: 5%;
+    max-width: 100%;
+    margin-top: -10vh;
+
+  }
+
+  .houseDetails > div {
+    margin-top: 3%;
+  }
+
+  .houseStreet {
+    font-weight: bold;
+    font-size: 150%;
+    height: 15%;
+  }
+
+  .houseImg2 {
+    height: 1.5vh;
+  }
+
+}

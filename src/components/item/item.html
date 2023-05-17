@@ -1,0 +1,33 @@
+<div class="list">
+  <div class="imgContainer">
+    <router-link class="houseImg" :style="{
+          backgroundImage: `url(${house.image})`
+        }" :to="{ name: 'house', params: { id: house.id } }"
+                 href="#">
+    </router-link>
+  </div>
+  <div class="houseInfo">
+    <div class="info1">
+      <div class="street title1">{{ house.location.street }}</div>
+      <div class="price">€{{ house.price }}</div>
+      <div class="city">{{ house.location.city }}</div>
+      <div class="details">
+        <span><img class="img" src="/assets/images/ic_bed@3x.png"/> {{ house.rooms.bedrooms }}</span>
+        <span><img class="img" src="/assets/images/ic_bath@3x.png"/>  {{ house.rooms.bathrooms }}</span>
+        <span><img class=" square" src="/assets/images/ic_size@3x.png"/> {{ house.size }} m2</span>
+      </div>
+    </div>
+
+    <div class="deleteEdit">
+      <div>
+        <router-link v-show="house.madeByMe" :to="{name:'Edit',  params: { id: house.id }}">
+          <img class="imgEditItem" src="/assets/images/ic_edit@3x.png"/>
+        </router-link>
+      </div>
+      <div @click="clickDeleteButton" v-show="house.madeByMe">
+        <img class="imgEditItem" src="/assets/images/ic_delete@3x.png"/>
+      </div>
+    </div>
+
+  </div>
+</div>

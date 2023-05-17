@@ -1,0 +1,84 @@
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 10;
+  padding-top: 30vh;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.titleModal {
+  margin-bottom: 10%;
+}
+
+.modalContent {
+  margin: 4% auto;
+}
+
+.modal-content {
+  background-color: rgba(254, 254, 254, 0.98);
+  margin: auto;;
+  border: 1px solid #888;
+  width: 30%;
+  height: 30%;
+  padding: 3%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column
+}
+
+.modal-content > p {
+  text-align: center;
+}
+
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalButtons > button {
+  width: 50%;
+  margin: auto;
+  height: 5vh;
+  border-radius: 10px;
+  margin-top: 3%;
+  border: none;
+  color: white
+}
+
+.yesdelete {
+  background-color: coral;
+}
+
+.goBack {
+  background-color: gray;
+}
+
+@media only screen and (max-width: 900px) {
+  .modal-content {
+    width: 80vw;
+    height: 25%;
+    padding-bottom: 2%
+  }
+
+  .modalButtons > button {
+    height: 100%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+  }
+
+  .titleModal {
+    margin-bottom: 5%;
+  }
+
+  .modalContent {
+    margin: 2% auto;
+    text-align: center;
+  }
+
+}

@@ -1,0 +1,121 @@
+<div class="formContent">
+  <h1 class="title1">
+    Edit listing
+  </h1>
+  <router-link class="linkPost" :to="{name: 'houses'}">
+    <img class="houseImg2" src="/assets/images/ic_back_grey@3x.png"/>
+    <span class="hiddenPost title1">Back to overview</span>
+  </router-link>
+
+  <Form class="postForm" @submit="submit">
+    <div class="formRow">
+      <div><label for="street">Street name*</label></div>
+      <Field :rules="validateField" id="street" class="doubleForm" name="street" placeholder="Enter the street name"
+             type="text"/>
+      <ErrorMessage name="street" class="errorM"/>
+      <div class="address formRow double">
+        <div>
+          <div><label for="houseNumber">House number</label></div>
+          <Field :rules="validateNumber"
+                 id="houseNumber"
+                 name="houseNumber"
+                 placeholder="Enter the house number"
+                 type="text"
+                 class="input"/>
+          <ErrorMessage name="houseNumber" class="errorM"/>
+        </div>
+        <div>
+          <div><label for="option" class="right">Addition</label></div>
+          <Field class="input right" id="option" name="option" type="text" placeholder="eg. A"/>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div><label for="code">Postal code*</label></div>
+      <Field v-model="code" :rules="validateField" id="code" type="text" name="code" placeholder="eg. 1000AA"/>
+      <ErrorMessage name="code" class="errorM"/>
+    </div>
+    <div>
+      <div><label for="city">City*</label></div>
+      <Field v-model="city" :rules="validateField" id="city" type="text" name="city" placeholder="eg. Utrecht"/>
+      <ErrorMessage name="city" class="errorM"/>
+    </div>
+    <div>
+      <label class="uploadImage">Upload picture (PNG or JPG)*</label>
+      <div class="imageFileEdit" id="imgLabel" :style="{
+          backgroundImage: `url(${imageURl})`
+        }">
+        <div class="label"><label for="image">
+          <div class="imageLabel"></div>
+        </label></div>
+        <div class="btn">
+          <img id="deleteImgBtn" src="/assets/images/ic_clear_white@3x.png" @click="onImageDelete"/>
+        </div>
+      </div>
+      <Field class="inputfile" :rules="validateImage" type="file" id="image" name="image"/>
+      <ErrorMessage name="image" class="errorM"/>
+    </div>
+    <div>
+      <div><label for="price">Price*</label></div>
+      <Field v-model="price" :rules="validateNumber" id="price" type="price" name="price" placeholder="eg. €500.000"/>
+      <ErrorMessage name="price" class="errorM"/>
+    </div>
+    <div class="double">
+      <div>
+        <div>
+          <label for="size">Size*</label>
+        </div>
+        <Field v-model="size" :rules="validateNumber" id="size" class="input" type="text" name="size"
+               placeholder="eg. 60m2"/>
+        <ErrorMessage name="size" class="errorM"/>
+      </div>
+      <div>
+        <div>
+          <label for="garage" class="right">Garage*</label>
+        </div>
+        <Field v-model="hasGarage" :rules="validateField" as="select" class="input right" name="garage" id="garage">
+          <option disabled selected hidden style="{color:gray}" value="">Select</option>
+          <option value="yes">yes</option>
+          <option value="no">No</option>
+        </Field>
+        <ErrorMessage name="garage" class="errorM"/>
+      </div>
+    </div>
+    <div class="double">
+      <div>
+        <div>
+          <label for="bedrooms">Bedrooms*</label>
+        </div>
+        <Field v-model="bedrooms" :rules="validateNumber" class="input" id="bedrooms" name="bedrooms" type="text"
+               placeholder="Enter amount"/>
+        <ErrorMessage name="bedrooms" class="errorM"/>
+      </div>
+      <div>
+        <div>
+          <label for="bathrooms" class="right">Bathrooms*</label>
+        </div>
+        <Field v-model="bathrooms" :rules="validateNumber" id="bathrooms" class="input right" name="bathrooms"
+               type="text"
+               placeholder="Enter amount"/>
+        <ErrorMessage name="bathrooms" class="errorM"/>
+      </div>
+    </div>
+    <div>
+      <div>
+        <label for="date">Construction date*</label>
+      </div>
+      <Field v-model="constructionYear" :rules="validateNumber" id="date" type="text" name="constructionYear"
+             placeholder="eg. 1990"/>
+      <ErrorMessage name="date" class="errorM"/>
+    </div>
+    <div>
+      <div><label for="description">Description*</label></div>
+      <Field v-model="description" :rules="validateField" type="text" class="description" name="description"
+             placeholder="Enter description"/>
+      <ErrorMessage name="description" class="errorM"/>
+    </div>
+    <div>
+      <button :disabled="isSubmited" @submit="submit" type="submit" class="post">Save</button>
+    </div>
+  </Form>
+</div>

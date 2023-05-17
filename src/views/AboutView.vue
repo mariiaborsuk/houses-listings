@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2 class="margin">About DTT Real Estate</h2>
+    <h1 class="hiddenMobile title1">About</h1>
+    <h2 class="margin title1">About DTT Real Estate</h2>
     <div class="content margin">
       <p>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -13,7 +14,7 @@
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua
       </p>
-      <h2 style="padding-top: 2rem">Design and Development</h2>
+      <h2 class="title1">Design and Development</h2>
       <div class="logoDiv">
         <div class="picture"><img class="img" src="/assets/images/img_logo_dtt@3x.png"/></div>
         <div style="padding-left: 1rem">

@@ -9,6 +9,10 @@ export const useHousesStore = defineStore('houses', {
   }),
 
   actions: {
+    /**
+     * get the list of houses from backend
+     * @returns {Promise<any>}
+     */
     async getHouses() {
       var self = this
       return fetch('https://api.intern.d-tt.nl/api/houses', {
@@ -20,6 +24,12 @@ export const useHousesStore = defineStore('houses', {
           return data
         })
     },
+    /**
+     *
+     * @param {number} id
+     * @returns {Promise<*>}
+     * get the House details from backend using the House id
+     */
     async getHouseById(id) {
       const list = await this.getHouses()
       for (let i = 0; i < list.length; i++) {
@@ -28,6 +38,24 @@ export const useHousesStore = defineStore('houses', {
         }
       }
     },
+    /**
+     *
+     * @param {number} postPrice
+     * @param {number} postbedrooms
+     * @param {number} postbathrooms
+     * @param {number} postSize
+     * @param {string}postStreetName
+     * @param {number} postHouseNumber
+     * @param {string} postZip
+     * @param {string} postCity
+     * @param {string}postNumberAddition
+     * @param {number} postConstructionYear
+     * @param {('yes'|'no')} postHasGarage
+     * @param {string} postDescription
+     * @returns {Promise<string>}
+     * adding a new House;
+     * uploading an image for a House separately using House id
+     */
     async postHouse(
       postPrice,
       postbedrooms,
@@ -80,6 +108,25 @@ export const useHousesStore = defineStore('houses', {
           response.text()
         )
     },
+    /**
+     *
+     * @param {number} houseId
+     * @param {number} newPostPrice
+     * @param {number} newPostbedrooms
+     * @param {number} newPostbathrooms
+     * @param {number} newPostSize
+     * @param {string} newPostStreetName
+     * @param {number} newPostHouseNumber
+     * @param {string}newPostZip
+     * @param {string}newPostCity
+     * @param{string} newPostNumberAddition
+     * @param {number} newPostConstructionYear
+     * @param {('yes'|'no')} newPostHasGarage
+     * @param {string} newPostDescription
+     * @returns {Promise<string>}
+     *   replacing old image data with new, provided in parameters
+     *   uploading a new image for House separately using House id
+     */
     async editHouse(
       houseId,
       newPostPrice,
@@ -95,6 +142,7 @@ export const useHousesStore = defineStore('houses', {
       newPostHasGarage,
       newPostDescription
     ) {
+
       var self = this
       return fetch(`https://api.intern.d-tt.nl/api/houses/${houseId}`, {
           method: 'POST',
@@ -133,6 +181,11 @@ export const useHousesStore = defineStore('houses', {
 
         }).then((response) => response.text())
     },
+    /**
+     *
+     * @param {number} houseId
+     * @returns {Promise<string>}
+     */
     async deleteHouse(houseId) {
       return fetch(`https://api.intern.d-tt.nl/api/houses/${houseId}`, {
           method: 'DELETE',

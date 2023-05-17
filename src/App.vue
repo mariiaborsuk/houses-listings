@@ -7,7 +7,7 @@
 </template>
 <script>
 import Navigation from '@/components/Navigation.vue'
-import Modal from "@/components/Modal.vue";
+import Modal from "@/components/Modal/Modal.vue";
 
 export default {
   name: 'App',
@@ -18,12 +18,26 @@ export default {
 }
 </script>
 <style>
-.title {
-  font-family: Open Sans Semibold;
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&family=Montserrat:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&family=Montserrat:ital,wght@1,500&display=swap');
+
+.title1 {
+  font-family: 'Open Sans Semibold', arial;
+  font-weight: bold;
 }
 
-.title2 {
-  font-family: Montserrat Medium Italic
+.errorM {
+  font-family: 'Montserrat';
+}
+
+h1 {
+  text-align: center;
+  padding: 2%
+}
+
+h2 {
+  margin-top: 2%;
+  margin-bottom: 2%
 }
 
 body {
@@ -31,7 +45,7 @@ body {
   height: 200%;
   background-color: #dddddd;
   color: #4d4d4d;
-  font-family: Open Sans Regular;
+  font-family: 'Open Sans Regular', arial;
 }
 
 .content {
@@ -39,7 +53,25 @@ body {
 
 }
 
+input {
+  font-size: 12px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 900px) {
+  body {
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
   .nav {
     position: fixed;
     left: 0;
@@ -72,6 +104,10 @@ body {
     background-color: white;
     height: 100px;
     display: block
+  }
+
+  body {
+    font-size: 18px;
   }
 
   .nav > div {

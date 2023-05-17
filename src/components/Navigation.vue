@@ -3,7 +3,7 @@
     <div class="logo"><img src="/assets/images/img_logo_dtt@3x.png"/></div>
     <router-link :to="{ name: 'houses' }" class="link home" @click="handleClick"
     >
-      <div :class="$route.name === 'houses' ? 'active' : ''">Houses</div>
+      <div :class="$route.name === 'houses' ? 'active' : ''" class="title1">Houses</div>
       <img
         id="home"
         :src="
@@ -15,7 +15,7 @@
 
     <router-link :to="{ name: 'about' }" class="link about"
     >
-      <div :class="$route.name === 'about' ? 'active' : ''">About</div>
+      <div :class="$route.name === 'about' ? 'active' : ''" class="title1">About</div>
       <img
         :src="
           $route.name === 'about'
@@ -54,6 +54,14 @@ export default {
 
   .logo {
     display: none;
+  }
+
+  #home {
+    width: 30%
+  }
+
+  #about {
+    width: 30%
   }
 }
 

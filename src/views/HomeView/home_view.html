@@ -1,0 +1,37 @@
+<div class="header margin">
+  <h1 class="title1">Houses</h1>
+  <router-link :to="{name:'create'}" class="createBtn">
+    <button>+ <span class="hidden">CREATE NEW</span></button>
+  </router-link>
+</div>
+
+<div class="margin buttons">
+  <div class="search">
+    <form @submit.prevent="search">
+      <input type="text" class="searchInput" placeholder="Search for a house" v-model="textSearch"/>
+    </form>
+    <div class="clear">
+      <button :class="!searchActive ? 'nonActive' : ''" @click="handleClick"></button>
+    </div>
+  </div>
+
+  <div class="sort">
+    <div class="sortPrice" @click="sortByPrice" :class="sortActive === 'price' ? 'sortActive' : ''" id="sortPrice">
+      Price
+    </div>
+    <div class="sortSize" @click="sortBySize" :class="sortActive === 'size' ? 'sortActive' : ''" id="sortSize">
+      Size
+    </div>
+  </div>
+</div>
+<div class="content margin">
+  <h2 v-if="filteredList.length> 0 && showResult">{{ searchResult }} results found</h2>
+  <div class="errorMessage1" v-show="showError">
+    <div class="error"></div>
+    <div class="displayMessage">
+      <p>No results found.</p>
+      <p>Please try another keyword.</p>
+    </div>
+  </div>
+  <Item v-show="filteredList.length > 0" v-for="house in filteredList" :key="house.id" :house="house"/>
+</div>
